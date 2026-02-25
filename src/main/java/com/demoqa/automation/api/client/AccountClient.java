@@ -4,6 +4,7 @@ import com.demoqa.automation.api.base.ApiSpecification;
 import com.demoqa.automation.api.models.request.LoginRequest;
 import com.demoqa.automation.api.models.response.LoginResponse;
 import com.demoqa.automation.api.models.response.TokenResponse;
+import com.demoqa.automation.api.models.response.UserResponse;
 import io.qameta.allure.Step;
 import io.restassured.RestAssured;
 
@@ -58,5 +59,20 @@ public class AccountClient {
 				.then()
 				.extract()
 				.as(TokenResponse.class);
+	}
+
+	private static final String USER_ENDPOINT = "/Account/v1/User/";
+
+	@Step("Get user by id: {userId}")
+	public UserResponse getUser(String userId, String token) {
+		return RestAssured
+				.given()
+				.spec(ApiSpecification.requestSpecWithAllure())
+				.header("Authorization", "Bearer " + token)
+				.when()
+				.get(USER_ENDPOINT + userId)
+				.then()
+				.extract()
+				.as(UserResponse.class);
 	}
 }

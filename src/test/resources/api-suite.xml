@@ -7,4 +7,10 @@
         </classes>
     </test>
 
+    <test name="Book Store Tests">
+        <classes>
+            <class name="com.demoqa.automation.api.tests.BookStoreTest"/>
+        </classes>
+    </test>
+
 </suite>

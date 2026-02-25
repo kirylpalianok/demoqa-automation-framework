@@ -6,17 +6,20 @@ import com.demoqa.automation.api.models.response.LoginResponse;
 import com.demoqa.automation.api.models.response.TokenResponse;
 import com.demoqa.automation.config.ConfigManager;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Listeners;
+import com.demoqa.automation.api.client.BookStoreClient;
 
 public class BaseApiTest {
 
 	protected AccountClient accountClient;
 	protected String token;
 	protected String userId;
+	protected BookStoreClient bookStoreClient;
+
 
 	@BeforeClass
 	public void setUp() {
 		accountClient = new AccountClient();
+		bookStoreClient = new BookStoreClient();
 
 		LoginRequest request = new LoginRequest(
 				ConfigManager.getConfig().username(),
