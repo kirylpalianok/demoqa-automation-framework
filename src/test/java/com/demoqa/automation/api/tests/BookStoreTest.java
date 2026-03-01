@@ -1,16 +1,11 @@
 package com.demoqa.automation.api.tests;
 
-import com.demoqa.automation.api.base.BaseApiTest;
-import com.demoqa.automation.api.models.request.AddBookRequest;
-import com.demoqa.automation.api.models.response.BookListResponse;
-import com.demoqa.automation.api.models.response.UserResponse;
-import com.demoqa.automation.api.assertions.BookAssertions;
+import com.demoqa.automation.api.domain.user.User;
+import com.demoqa.automation.api.infrastructure.BaseApiTest;
 import io.qameta.allure.*;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-
-import java.util.List;
 
 @Epic("DemoQA API")
 @Feature("Book Store")
@@ -18,7 +13,9 @@ public class BookStoreTest extends BaseApiTest {
 
 	@BeforeMethod
 	public void cleanUserBooks() {
-		bookStoreClient.deleteAllBooks(userId, token);
+		userFactory.defaultUser()
+				.login()
+				.deleteAllBooks();
 	}
 
 	@Test(description = "Verify books list is not empty")
@@ -26,9 +23,11 @@ public class BookStoreTest extends BaseApiTest {
 	@Severity(SeverityLevel.NORMAL)
 	public void testGetBooks() {
 
-		BookListResponse response = bookStoreClient.getBooks();
+		User user = userFactory.defaultUser().login();
 
-		BookAssertions.assertBooksNotEmpty(response.getBooks());
+		boolean hasBooks = user.getAvailableBooks().size() > 0;
+
+		Assert.assertTrue(hasBooks);
 	}
 
 	@Test(description = "Verify authorized user can add a book")
@@ -36,21 +35,13 @@ public class BookStoreTest extends BaseApiTest {
 	@Severity(SeverityLevel.CRITICAL)
 	public void testAddBook() {
 
-		String isbn = bookStoreClient.getBooks()
-				.getBooks()
-				.get(0)
-				.getIsbn();
+		User user = userFactory.defaultUser()
+				.login()
+				.addFirstAvailableBook();
 
-		AddBookRequest request = new AddBookRequest(
-				userId,
-				List.of(new AddBookRequest.Isbn(isbn))
+		Assert.assertTrue(
+				user.hasBook(user.getLastAddedBookIsbn())
 		);
-
-		bookStoreClient.addBook(request, token);
-
-		UserResponse user = accountClient.getUser(userId, token);
-
-		BookAssertions.assertBookPresent(user, isbn);
 	}
 
 	@Test(description = "Verify authorized user can delete all books")
@@ -58,22 +49,11 @@ public class BookStoreTest extends BaseApiTest {
 	@Severity(SeverityLevel.CRITICAL)
 	public void testDeleteBooks() {
 
-		String isbn = bookStoreClient.getBooks()
-				.getBooks()
-				.get(0)
-				.getIsbn();
+		User user = userFactory.defaultUser().login();
 
-		AddBookRequest request = new AddBookRequest(
-				userId,
-				List.of(new AddBookRequest.Isbn(isbn))
-		);
+		user.addFirstAvailableBook()
+				.deleteAllBooks();
 
-		bookStoreClient.addBook(request, token);
-
-		bookStoreClient.deleteAllBooks(userId, token);
-
-		UserResponse user = accountClient.getUser(userId, token);
-
-		BookAssertions.assertUserBooksEmpty(user);
+		Assert.assertTrue(user.getUserBooks().isEmpty());
 	}
 }

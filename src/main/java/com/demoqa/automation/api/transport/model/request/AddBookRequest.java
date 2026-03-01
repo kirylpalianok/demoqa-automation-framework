@@ -1,4 +1,4 @@
-package com.demoqa.automation.api.models.request;
+package com.demoqa.automation.api.transport.model.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,17 +1,17 @@
 package com.demoqa.automation.api.client;
 
-import com.demoqa.automation.api.base.ApiSpecification;
-import com.demoqa.automation.api.models.request.LoginRequest;
-import com.demoqa.automation.api.models.response.LoginResponse;
-import com.demoqa.automation.api.models.response.TokenResponse;
-import com.demoqa.automation.api.models.response.UserResponse;
-import io.qameta.allure.Step;
+import com.demoqa.automation.api.infrastructure.rest.ApiSpecification;
+import com.demoqa.automation.api.transport.model.request.LoginRequest;
+import com.demoqa.automation.api.transport.model.response.LoginResponse;
+import com.demoqa.automation.api.transport.model.response.TokenResponse;
+import com.demoqa.automation.api.transport.model.response.UserResponse;
 import io.restassured.RestAssured;
 
 public class AccountClient {
 
 	private static final String LOGIN_ENDPOINT = "/Account/v1/Login";
 	private static final String TOKEN_ENDPOINT = "/Account/v1/GenerateToken";
+	private static final String USER_ENDPOINT = "/Account/v1/User/";
 
 	public LoginResponse login(LoginRequest request) {
 		return RestAssured
@@ -36,38 +36,10 @@ public class AccountClient {
 				.as(TokenResponse.class);
 	}
 
-	@Step("Login with username: {request.userName}")
-	public LoginResponse loginWithAllure(LoginRequest request) {
-		return RestAssured
-				.given()
-				.spec(ApiSpecification.requestSpecWithAllure())
-				.body(request)
-				.post(LOGIN_ENDPOINT)
-				.then()
-				.extract()
-				.as(LoginResponse.class);
-	}
-
-	@Step("Generate token for user")
-	public TokenResponse generateTokenWithAllure(LoginRequest request) {
-		return RestAssured
-				.given()
-				.spec(ApiSpecification.requestSpecWithAllure())
-				.body(request)
-				.when()
-				.post(TOKEN_ENDPOINT)
-				.then()
-				.extract()
-				.as(TokenResponse.class);
-	}
-
-	private static final String USER_ENDPOINT = "/Account/v1/User/";
-
-	@Step("Get user by id: {userId}")
 	public UserResponse getUser(String userId, String token) {
 		return RestAssured
 				.given()
-				.spec(ApiSpecification.requestSpecWithAllure())
+				.spec(ApiSpecification.requestSpec())
 				.header("Authorization", "Bearer " + token)
 				.when()
 				.get(USER_ENDPOINT + userId)

@@ -1,4 +1,4 @@
-package com.demoqa.automation.api.models.response;
+package com.demoqa.automation.api.transport.model.response;
 
 import lombok.Data;
 

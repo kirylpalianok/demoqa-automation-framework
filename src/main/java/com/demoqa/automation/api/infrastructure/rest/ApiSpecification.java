@@ -1,7 +1,6 @@
-package com.demoqa.automation.api.base;
+package com.demoqa.automation.api.infrastructure.rest;
 
 import com.demoqa.automation.config.ConfigManager;
-import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.http.ContentType;
@@ -15,14 +14,6 @@ public class ApiSpecification {
 		return new RequestSpecBuilder()
 				.setBaseUri(BASE_URL)
 				.setContentType(ContentType.JSON)
-				.build();
-	}
-
-	public static RequestSpecification requestSpecWithAllure() {
-		return new RequestSpecBuilder()
-				.setBaseUri(BASE_URL)
-				.setContentType(ContentType.JSON)
-				.addFilter(new AllureRestAssured())
 				.build();
 	}
 }

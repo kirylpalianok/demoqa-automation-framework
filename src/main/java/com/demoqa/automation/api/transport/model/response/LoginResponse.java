@@ -1,4 +1,4 @@
-package com.demoqa.automation.api.models.response;
+package com.demoqa.automation.api.transport.model.response;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;

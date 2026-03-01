@@ -1,16 +1,16 @@
 package com.demoqa.automation.api.tests;
 
-import com.demoqa.automation.api.base.BaseApiTest;
-import com.demoqa.automation.api.models.request.LoginRequest;
-import com.demoqa.automation.api.models.response.LoginResponse;
-import com.demoqa.automation.api.models.response.TokenResponse;
-import com.demoqa.automation.api.assertions.AccountAssertions;
+import com.demoqa.automation.api.infrastructure.BaseApiTest;
+import com.demoqa.automation.api.transport.model.request.LoginRequest;
+import com.demoqa.automation.api.transport.model.response.LoginResponse;
+import com.demoqa.automation.api.transport.model.response.TokenResponse;
 import com.demoqa.automation.config.ConfigManager;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Story;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 import io.qameta.allure.Description;
 
@@ -29,12 +29,11 @@ public class AuthorizationTest extends BaseApiTest {
 				ConfigManager.getConfig().password()
 		);
 
-		LoginResponse response = accountClient.loginWithAllure(request);
+		LoginResponse response = accountClient.login(request);
 
-		AccountAssertions.assertLoginSuccessful(
-				response,
-				ConfigManager.getConfig().username()
-		);
+		Assert.assertNotNull(response.getUserId());
+		Assert.assertEquals(response.getUsername(),
+				ConfigManager.getConfig().username());
 	}
 
 	@Test(description = "Verify token generation is successful")
@@ -48,8 +47,9 @@ public class AuthorizationTest extends BaseApiTest {
 				ConfigManager.getConfig().password()
 		);
 
-		TokenResponse response = accountClient.generateTokenWithAllure(request);
+		TokenResponse response = accountClient.generateToken(request);
 
-		AccountAssertions.assertTokenGenerated(response);
+		Assert.assertNotNull(response.getToken());
+		Assert.assertEquals(response.getStatus(), "Success");
 	}
 }

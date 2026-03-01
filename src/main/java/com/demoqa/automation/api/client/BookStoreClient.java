@@ -1,48 +1,38 @@
 package com.demoqa.automation.api.client;
 
-import com.demoqa.automation.api.base.ApiSpecification;
-import com.demoqa.automation.api.models.request.AddBookRequest;
-import com.demoqa.automation.api.models.response.BookListResponse;
-import io.qameta.allure.Step;
+import com.demoqa.automation.api.infrastructure.rest.ApiSpecification;
+import com.demoqa.automation.api.transport.model.request.AddBookRequest;
+import com.demoqa.automation.api.transport.model.response.BookListResponse;
 import io.restassured.RestAssured;
+import io.restassured.response.Response;
 
 public class BookStoreClient {
 
 	private static final String BOOKS_ENDPOINT = "/BookStore/v1/Books";
 
-	@Step("Add book to user collection")
-	public void addBook(AddBookRequest request, String token) {
-		RestAssured
+	public Response addBook(AddBookRequest request, String token) {
+		return RestAssured
 				.given()
-				.spec(ApiSpecification.requestSpecWithAllure())
+				.spec(ApiSpecification.requestSpec())
 				.header("Authorization", "Bearer " + token)
 				.body(request)
-				.when()
-				.post(BOOKS_ENDPOINT)
-				.then()
-				.statusCode(201);
+				.post(BOOKS_ENDPOINT);
 	}
 
-	@Step("Delete all books for user")
-	public void deleteAllBooks(String userId, String token) {
-		RestAssured
+	public Response deleteAllBooks(String userId, String token) {
+		return RestAssured
 				.given()
-				.spec(ApiSpecification.requestSpecWithAllure())
+				.spec(ApiSpecification.requestSpec())
 				.header("Authorization", "Bearer " + token)
 				.queryParam("UserId", userId)
-				.when()
-				.delete(BOOKS_ENDPOINT)
-				.then()
-				.statusCode(204);
+				.delete(BOOKS_ENDPOINT);
 	}
 
-	@Step("Get all books")
 	public BookListResponse getBooks() {
 		return RestAssured
 				.given()
-				.spec(ApiSpecification.requestSpecWithAllure())
-				.when()
-				.get("/BookStore/v1/Books")
+				.spec(ApiSpecification.requestSpec())
+				.get(BOOKS_ENDPOINT)
 				.then()
 				.extract()
 				.as(BookListResponse.class);
