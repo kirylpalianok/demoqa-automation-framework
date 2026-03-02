@@ -1,0 +1,16 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="API Suite">
+
+    <test name="Authentication Tests">
+        <classes>
+            <class name="com.demoqa.automation.api.tests.AuthorizationTest"/>
+        </classes>
+    </test>
+
+    <test name="Book Store Tests">
+        <classes>
+            <class name="com.demoqa.automation.api.tests.BookStoreTest"/>
+        </classes>
+    </test>
+
+</suite>
