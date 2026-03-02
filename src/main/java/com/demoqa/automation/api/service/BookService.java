@@ -22,13 +22,21 @@ public class BookService {
 	}
 
 	public List<BookResponse> getAvailableBooks() {
-		BookListResponse response = bookStoreClient.getBooks();
-		return response.getBooks();
+
+		Response response = bookStoreClient.getBooks();
+
+		BookListResponse bookList =
+				response.as(BookListResponse.class);
+
+		return bookList.getBooks();
 	}
 
 	public String addFirstAvailableBook(String userId, String token) {
 
-		BookListResponse books = bookStoreClient.getBooks();
+		Response booksResponse = bookStoreClient.getBooks();
+
+		BookListResponse books =
+				booksResponse.as(BookListResponse.class);
 
 		String isbn = books.getBooks().get(0).getIsbn();
 
@@ -37,26 +45,20 @@ public class BookService {
 				List.of(new AddBookRequest.Isbn(isbn))
 		);
 
-		Response response = bookStoreClient.addBook(request, token);
-
-		if (response.statusCode() != 201) {
-			throw new RuntimeException("Failed to add book. Status: "
-					+ response.statusCode());
-		}
+		bookStoreClient.addBook(request, token);
 
 		return isbn;
 	}
 
 	public void deleteAllBooks(String userId, String token) {
-		Response response = bookStoreClient.deleteAllBooks(userId, token);
-
-		if (response.statusCode() != 204) {
-			throw new RuntimeException("Failed to delete books. Status: "
-					+ response.statusCode());
-		}
+		bookStoreClient.deleteAllBooks(userId, token);
 	}
 
 	public UserResponse getUser(String userId, String token) {
-		return accountClient.getUser(userId, token);
+
+		Response response =
+				accountClient.getUser(userId, token);
+
+		return response.as(UserResponse.class);
 	}
 }

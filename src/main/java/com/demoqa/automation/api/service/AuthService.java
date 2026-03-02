@@ -1,11 +1,13 @@
 package com.demoqa.automation.api.service;
 
-
 import com.demoqa.automation.api.client.AccountClient;
 import com.demoqa.automation.api.domain.auth.AuthData;
+import com.demoqa.automation.api.infrastructure.security.PasswordResolver;
 import com.demoqa.automation.api.transport.model.request.LoginRequest;
 import com.demoqa.automation.api.transport.model.response.LoginResponse;
 import com.demoqa.automation.api.transport.model.response.TokenResponse;
+import com.demoqa.automation.config.ConfigManager;
+import io.restassured.response.Response;
 
 public class AuthService {
 
@@ -15,15 +17,26 @@ public class AuthService {
 		this.accountClient = accountClient;
 	}
 
+	public AuthData loginDefaultUser() {
+
+		String username = ConfigManager.getConfig().username();
+		String password = PasswordResolver.resolve();
+
+		return login(username, password);
+	}
+
 	public AuthData login(String username, String password) {
+
 		LoginRequest request = new LoginRequest(username, password);
 
-		LoginResponse loginResponse = accountClient.login(request);
-		TokenResponse tokenResponse = accountClient.generateToken(request);
+		Response loginResponseRaw = accountClient.login(request);
+		Response tokenResponseRaw = accountClient.generateToken(request);
 
-		if (loginResponse.getUserId() == null || tokenResponse.getToken() == null) {
-			throw new RuntimeException("Authentication failed");
-		}
+		LoginResponse loginResponse =
+				loginResponseRaw.as(LoginResponse.class);
+
+		TokenResponse tokenResponse =
+				tokenResponseRaw.as(TokenResponse.class);
 
 		return new AuthData(
 				loginResponse.getUserId(),

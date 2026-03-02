@@ -28,13 +28,10 @@ public class BookStoreClient {
 				.delete(BOOKS_ENDPOINT);
 	}
 
-	public BookListResponse getBooks() {
+	public Response getBooks() {
 		return RestAssured
 				.given()
 				.spec(ApiSpecification.requestSpec())
-				.get(BOOKS_ENDPOINT)
-				.then()
-				.extract()
-				.as(BookListResponse.class);
+				.get(BOOKS_ENDPOINT);
 	}
 }
