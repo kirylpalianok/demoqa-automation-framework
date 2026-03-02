@@ -2,7 +2,7 @@ package com.demoqa.automation.api.infrastructure;
 
 import com.demoqa.automation.api.client.AccountClient;
 import com.demoqa.automation.api.client.BookStoreClient;
-import com.demoqa.automation.api.dsl.UserFactory;
+import com.demoqa.automation.api.domain.factory.UserFactory;
 import com.demoqa.automation.api.service.AuthService;
 import com.demoqa.automation.api.service.BookService;
 import io.qameta.allure.restassured.AllureRestAssured;

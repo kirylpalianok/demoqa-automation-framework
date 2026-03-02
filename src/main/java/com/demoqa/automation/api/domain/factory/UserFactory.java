@@ -1,4 +1,4 @@
-package com.demoqa.automation.api.dsl;
+package com.demoqa.automation.api.domain.factory;
 
 import com.demoqa.automation.api.domain.user.User;
 import com.demoqa.automation.api.service.AuthService;
