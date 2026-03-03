@@ -13,4 +13,7 @@ public interface TestConfig extends Config {
 
 	@Key("password.encrypted")
 	String encryptedPassword();
+
+	@Key("test.secret")
+	String secret();
 }

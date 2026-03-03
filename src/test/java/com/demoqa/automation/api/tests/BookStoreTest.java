@@ -78,6 +78,9 @@ public class BookStoreTest extends BaseApiTest {
 		BookListResponse books =
 				booksResponse.as(BookListResponse.class);
 
+		Assert.assertNotNull(books.getBooks(), "Books list is null");
+		Assert.assertFalse(books.getBooks().isEmpty(), "Books list is empty");
+
 		String isbn = books.getBooks().get(0).getIsbn();
 
 		AddBookRequest request = new AddBookRequest(

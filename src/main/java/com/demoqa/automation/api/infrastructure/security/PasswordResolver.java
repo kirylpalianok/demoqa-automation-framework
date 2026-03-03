@@ -9,7 +9,14 @@ public class PasswordResolver {
 		String encrypted =
 				ConfigManager.getConfig().encryptedPassword();
 
-		String secret = SecretResolver.resolveSecret();
+		String secret =
+				ConfigManager.getConfig().secret();
+
+		if (secret == null || secret.isBlank()) {
+			throw new RuntimeException(
+					"Secret key is not provided. Set test.secret property."
+			);
+		}
 
 		return CryptoUtil.decrypt(encrypted, secret);
 	}
