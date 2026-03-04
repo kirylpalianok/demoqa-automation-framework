@@ -10,9 +10,6 @@ import java.util.List;
 
 public class User {
 
-	private final String username;
-	private final String password;
-
 	private String lastAddedBookIsbn;
 
 	private final AuthService authService;
@@ -22,26 +19,15 @@ public class User {
 	private String token;
 	private boolean authenticated;
 
-	private User(String username,
-	             String password,
-	             AuthService authService,
-	             BookService bookService) {
-		this.username = username;
-		this.password = password;
+	public User(AuthService authService,
+	            BookService bookService) {
 		this.authService = authService;
 		this.bookService = bookService;
 	}
 
-	public static User withCredentials(String username,
-	                                   String password,
-	                                   AuthService authService,
-	                                   BookService bookService) {
-		return new User(username, password, authService, bookService);
-	}
-
-	@Step("User logs in with username: {username}")
+	@Step("User logs in as default user")
 	public User login() {
-		AuthData authData = authService.login(username, password);
+		AuthData authData = authService.loginDefaultUser();
 
 		this.userId = authData.getUserId();
 		this.token = authData.getToken();
@@ -50,24 +36,8 @@ public class User {
 		return this;
 	}
 
-	public boolean isAuthenticated() {
-		return authenticated;
-	}
-
-	public String getUserId() {
-		return userId;
-	}
-
-	public String getToken() {
-		return token;
-	}
-
 	public List<BookResponse> getAvailableBooks() {
 		return bookService.getAvailableBooks();
-	}
-
-	public String getUsername() {
-		return username;
 	}
 
 	@Step("User retrieves own book collection")

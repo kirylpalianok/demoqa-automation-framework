@@ -1,5 +1,6 @@
 package com.demoqa.automation.api.tests;
 
+import com.demoqa.automation.api.domain.auth.AuthData;
 import com.demoqa.automation.api.infrastructure.BaseApiTest;
 import com.demoqa.automation.api.transport.model.request.LoginRequest;
 import com.demoqa.automation.api.transport.model.response.LoginResponse;
@@ -10,6 +11,7 @@ import io.qameta.allure.Feature;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Story;
+import io.restassured.response.Response;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import io.qameta.allure.Description;
@@ -24,32 +26,33 @@ public class AuthorizationTest extends BaseApiTest {
 	@Description("Verify that user can login with valid credentials")
 	public void testLogin() {
 
-		LoginRequest request = new LoginRequest(
-				ConfigManager.getConfig().username(),
-				ConfigManager.getConfig().password()
-		);
+		AuthData auth = authService.loginDefaultUser();
 
-		LoginResponse response = accountClient.login(request);
-
-		Assert.assertNotNull(response.getUserId());
-		Assert.assertEquals(response.getUsername(),
-				ConfigManager.getConfig().username());
+		Assert.assertNotNull(auth.getUserId());
+		Assert.assertNotNull(auth.getToken());
 	}
 
-	@Test(description = "Verify token generation is successful")
-	@Story("Token Generation")
-	@Severity(SeverityLevel.CRITICAL)
-	@Description("Verify that token is generated for valid user")
-	public void testGenerateToken() {
+
+	@Test(description = "Verify generateToken endpoint returns Failed status")
+	@Story("Negative - Generate Token HTTP")
+	@Severity(SeverityLevel.NORMAL)
+	public void testGenerateTokenEndpointWithInvalidPassword() {
 
 		LoginRequest request = new LoginRequest(
 				ConfigManager.getConfig().username(),
-				ConfigManager.getConfig().password()
+				"wrongPassword123"
 		);
 
-		TokenResponse response = accountClient.generateToken(request);
+		Response response = accountClient.generateToken(request);
 
-		Assert.assertNotNull(response.getToken());
-		Assert.assertEquals(response.getStatus(), "Success");
+		Assert.assertEquals(response.statusCode(), 200);
+
+		TokenResponse tokenResponse =
+				response.as(TokenResponse.class);
+
+		Assert.assertEquals(tokenResponse.getStatus(), "Failed");
+		Assert.assertNull(tokenResponse.getToken());
+		Assert.assertEquals(tokenResponse.getResult(),
+				"User authorization failed.");
 	}
 }

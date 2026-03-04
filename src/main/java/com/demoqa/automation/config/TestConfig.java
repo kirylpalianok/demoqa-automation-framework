@@ -11,6 +11,9 @@ public interface TestConfig extends Config {
 	@Key("username")
 	String username();
 
-	@Key("password")
-	String password();
+	@Key("password.encrypted")
+	String encryptedPassword();
+
+	@Key("test.secret")
+	String secret();
 }
