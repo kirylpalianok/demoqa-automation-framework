@@ -7,6 +7,7 @@ import com.demoqa.automation.api.service.AuthService;
 import com.demoqa.automation.api.service.BookService;
 import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.RestAssured;
+import io.restassured.parsing.Parser;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeSuite;
 
@@ -21,6 +22,7 @@ public abstract class BaseApiTest {
 	@BeforeSuite
 	public void configureRestAssured() {
 		RestAssured.filters(new AllureRestAssured());
+		RestAssured.defaultParser = Parser.JSON;
 	}
 
 	@BeforeClass
