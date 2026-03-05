@@ -17,7 +17,7 @@ import org.testng.annotations.Test;
 import io.qameta.allure.Description;
 
 @Epic("DemoQA API")
-@Feature("Authentication")
+@Feature("Authorization")
 public class AuthorizationTest extends BaseApiTest {
 
 	@Test(description = "Verify user login is successful")
