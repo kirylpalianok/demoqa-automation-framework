@@ -16,4 +16,13 @@ public interface TestConfig extends Config {
 
 	@Key("test.secret")
 	String secret();
+
+	@Key("db.url")
+	String dbUrl();
+
+	@Key("db.user")
+	String dbUser();
+
+	@Key("db.password.encrypted")
+	String encryptedDbPassword();
 }

@@ -20,7 +20,7 @@ public class AuthService {
 	public AuthData loginDefaultUser() {
 
 		String username = ConfigManager.getConfig().username();
-		String password = PasswordResolver.resolve();
+		String password = PasswordResolver.resolveApiPassword();
 
 		return login(username, password);
 	}
