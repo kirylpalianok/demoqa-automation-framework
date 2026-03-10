@@ -4,20 +4,27 @@ import com.demoqa.automation.config.ConfigManager;
 
 public class PasswordResolver {
 
-	public static String resolve() {
+	private static final String SECRET =
+			ConfigManager.getConfig().secret();
 
-		String encrypted =
-				ConfigManager.getConfig().encryptedPassword();
+	public static String resolveApiPassword() {
 
-		String secret =
-				ConfigManager.getConfig().secret();
+		return decrypt(ConfigManager.getConfig().encryptedPassword());
+	}
 
-		if (secret == null || secret.isBlank()) {
+	public static String resolveDbPassword() {
+
+		return decrypt(ConfigManager.getConfig().encryptedDbPassword());
+	}
+
+	private static String decrypt(String encrypted) {
+
+		if (SECRET == null || SECRET.isBlank()) {
 			throw new RuntimeException(
 					"Secret key is not provided. Set test.secret property."
 			);
 		}
 
-		return CryptoUtil.decrypt(encrypted, secret);
+		return CryptoUtil.decrypt(encrypted, SECRET);
 	}
 }

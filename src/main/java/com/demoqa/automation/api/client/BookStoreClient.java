@@ -2,7 +2,6 @@ package com.demoqa.automation.api.client;
 
 import com.demoqa.automation.api.infrastructure.rest.ApiSpecification;
 import com.demoqa.automation.api.transport.model.request.AddBookRequest;
-import com.demoqa.automation.api.transport.model.response.BookListResponse;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 

@@ -1,5 +1,6 @@
 package com.demoqa.automation.api.infrastructure.database;
 
+import com.demoqa.automation.api.infrastructure.security.PasswordResolver;
 import com.demoqa.automation.config.ConfigManager;
 
 import java.sql.Connection;
@@ -14,7 +15,7 @@ public class DbClient {
 			return DriverManager.getConnection(
 					ConfigManager.getConfig().dbUrl(),
 					ConfigManager.getConfig().dbUser(),
-					ConfigManager.getConfig().dbPassword()
+					PasswordResolver.resolveDbPassword()
 			);
 		} catch (SQLException e) {
 			throw new RuntimeException("Failed to connect to database", e);

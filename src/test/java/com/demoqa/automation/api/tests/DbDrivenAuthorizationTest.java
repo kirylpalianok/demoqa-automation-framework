@@ -27,7 +27,7 @@ public class DbDrivenAuthorizationTest extends BaseApiTest {
 	@Description("Verify that user can login with valid credentials from DB")
 	public void testLoginUsingDatabaseData() {
 
-		TestUser user = repository.getTestUser();
+		TestUser user = repository.getTestUser("admin6");
 
 		LoginRequest request =
 				new LoginRequest(user.getUsername(), user.getPassword());
