@@ -25,4 +25,19 @@ public interface TestConfig extends Config {
 
 	@Key("db.password.encrypted")
 	String encryptedDbPassword();
+
+	@Key("browser")
+    String browser();
+
+	@Key("headless")
+	boolean headless();
+
+	@Key("implicit.timeout")
+	int implicitTimeout();
+
+	@Key("page.load.timeout")
+	int pageLoadTimeout();
+
+	@Key("explicit.timeout")
+	int explicitTimeout();
 }

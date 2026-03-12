@@ -1,9 +1,8 @@
-package com.demoqa.automation.api.tests;
+package com.demoqa.automation.tests.tests.api;
 
 import com.demoqa.automation.api.domain.auth.AuthData;
-import com.demoqa.automation.api.infrastructure.BaseApiTest;
+import com.demoqa.automation.tests.base.api.BaseApiTest;
 import com.demoqa.automation.api.transport.model.request.LoginRequest;
-import com.demoqa.automation.api.transport.model.response.LoginResponse;
 import com.demoqa.automation.api.transport.model.response.TokenResponse;
 import com.demoqa.automation.config.ConfigManager;
 import io.qameta.allure.Epic;

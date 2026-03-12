@@ -1,4 +1,4 @@
-package com.demoqa.automation.api.infrastructure.database.model;
+package com.demoqa.automation.infrastructure.database.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
