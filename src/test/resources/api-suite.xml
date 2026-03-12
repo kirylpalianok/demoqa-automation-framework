@@ -3,19 +3,19 @@
 
     <test name="Authorization Tests">
         <classes>
-            <class name="com.demoqa.automation.api.tests.AuthorizationTest"/>
+            <class name="com.demoqa.automation.tests.tests.api.AuthorizationTest"/>
         </classes>
     </test>
 
     <test name="Book Store Tests">
         <classes>
-            <class name="com.demoqa.automation.api.tests.BookStoreTest"/>
+            <class name="com.demoqa.automation.tests.tests.api.BookStoreTest"/>
         </classes>
     </test>
 
     <test name="DB Driven Authorization Tests">
         <classes>
-            <class name="com.demoqa.automation.api.tests.DbDrivenAuthorizationTest"/>
+            <class name="com.demoqa.automation.tests.tests.api.DbDrivenAuthorizationTest"/>
         </classes>
     </test>
 </suite>

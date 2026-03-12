@@ -1,4 +1,4 @@
-package com.demoqa.automation.api.infrastructure.security;
+package com.demoqa.automation.infrastructure.security;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;

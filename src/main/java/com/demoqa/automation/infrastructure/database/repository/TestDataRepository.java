@@ -1,7 +1,7 @@
-package com.demoqa.automation.api.infrastructure.database.repository;
+package com.demoqa.automation.infrastructure.database.repository;
 
-import com.demoqa.automation.api.infrastructure.database.DbClient;
-import com.demoqa.automation.api.infrastructure.database.model.TestUser;
+import com.demoqa.automation.infrastructure.database.DbClient;
+import com.demoqa.automation.infrastructure.database.model.TestUser;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

@@ -1,4 +1,4 @@
-package com.demoqa.automation.api.infrastructure;
+package com.demoqa.automation.tests.base.api;
 
 import com.demoqa.automation.api.client.AccountClient;
 import com.demoqa.automation.api.client.BookStoreClient;

@@ -1,4 +1,4 @@
-package com.demoqa.automation.api.infrastructure.security;
+package com.demoqa.automation.infrastructure.security;
 
 import com.demoqa.automation.config.ConfigManager;
 
