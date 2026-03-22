@@ -60,13 +60,13 @@ jobs:
           DELETE FROM public.data;
 
           INSERT INTO public.data (username, password, books)
-          VALUES ('${{ secrets.TEST_USERNAME }}', '${{ secrets.TEST_PASSWORD }}', 'Some Book');
+          VALUES (''admin6'', '${{ secrets.TEST_PASSWORD }}', 'Some Book');
           EOF
         env:
           PGPASSWORD: postgres
 
       - name: Run tests
-        run: mvn clean test -Ddb.url=jdbc:postgresql://localhost:5432/postgres -Ddb.user=postgres -Ddb.password.encrypted=iW6IqBc0Hhj5b0M4FfDo+w== -Dtest.secret=${{ secrets.TEST_SECRET }} -Dheadless=true
+        run: mvn clean test -Ddb.url=jdbc:postgresql://localhost:5432/postgres -Ddb.password.encrypted=iW6IqBc0Hhj5b0M4FfDo+w== -Dtest.secret=${{ secrets.TEST_SECRET }} -Dheadless=true
 
       - name: Generate Allure report
         if: always()
