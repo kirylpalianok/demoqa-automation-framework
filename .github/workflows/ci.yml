@@ -60,7 +60,7 @@ jobs:
           DELETE FROM public.data;
 
           INSERT INTO public.data (username, password, books)
-          VALUES (''admin6'', '${{ secrets.TEST_PASSWORD }}', 'Some Book');
+          VALUES ('admin6', '$TEST_PASSWORD', 'Some Book');
           EOF
         env:
           PGPASSWORD: postgres
