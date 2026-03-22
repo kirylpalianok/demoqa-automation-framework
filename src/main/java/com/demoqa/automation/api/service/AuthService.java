@@ -2,7 +2,7 @@ package com.demoqa.automation.api.service;
 
 import com.demoqa.automation.api.client.AccountClient;
 import com.demoqa.automation.api.domain.auth.AuthData;
-import com.demoqa.automation.api.infrastructure.security.PasswordResolver;
+import com.demoqa.automation.infrastructure.security.PasswordResolver;
 import com.demoqa.automation.api.transport.model.request.LoginRequest;
 import com.demoqa.automation.api.transport.model.response.LoginResponse;
 import com.demoqa.automation.api.transport.model.response.TokenResponse;

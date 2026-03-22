@@ -1,6 +1,6 @@
-package com.demoqa.automation.api.infrastructure.database;
+package com.demoqa.automation.infrastructure.database;
 
-import com.demoqa.automation.api.infrastructure.security.PasswordResolver;
+import com.demoqa.automation.infrastructure.security.PasswordResolver;
 import com.demoqa.automation.config.ConfigManager;
 
 import java.sql.Connection;
