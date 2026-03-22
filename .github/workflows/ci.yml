@@ -63,7 +63,7 @@ jobs:
           VALUES ('${{ secrets.TEST_USERNAME }}', '${{ secrets.TEST_PASSWORD }}', 'Some Book');
           EOF
         env:
-          PGPASSWORD: ${{ secrets.DB_PASSWORD }}
+          PGPASSWORD: postgres
 
       - name: Run tests
         run: mvn clean test -Dtest.secret=${{ secrets.TEST_SECRET }} -Dheadless=true
