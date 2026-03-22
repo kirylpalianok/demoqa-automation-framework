@@ -50,18 +50,22 @@ jobs:
 
       - name: Init DB schema and data
         run: |
-          psql -h localhost -U postgres -d postgres <<EOF
-          CREATE TABLE IF NOT EXISTS public.data (
+          psql -h localhost -U postgres -d postgres -c "
+            CREATE TABLE IF NOT EXISTS public.data (
               username TEXT,
               password TEXT,
               books TEXT
-          );
+            );
+          "
 
-          DELETE FROM public.data;
+          psql -h localhost -U postgres -d postgres -c "
+            DELETE FROM public.data;
+          "
 
-          INSERT INTO public.data (username, password, books)
-          VALUES ('admin6', '$TEST_PASSWORD', 'Some Book');
-          EOF
+          psql -h localhost -U postgres -d postgres -c "
+            INSERT INTO public.data (username, password, books)
+            VALUES ('admin6', '${{ secrets.TEST_PASSWORD }}', 'Some Book');
+          "
         env:
           PGPASSWORD: postgres
 
